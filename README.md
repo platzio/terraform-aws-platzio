@@ -17,8 +17,16 @@ module "platz" {
   source = "github.com/platzio/terraform-aws-platzio?ref=v0.4.6-1/modules/main"
 
   k8s_cluster_name = "EKS CLUSTER NAME"
-  domain           = "platz.${aws_route53_zone.ZONE.name}"
-  tls_secret_name  = "TLS SECRET"
+  ingress = {
+    host        = "platz.${aws_route53_zone.ZONE.name}"
+    class_name  = ""
+    tls         = {
+      secret_name        = "TLS SECRET"
+      create_certificate = "false"
+      create_issuer      = "false"
+      issuer_email       = "example@example.com"
+    }
+  }
 
   oidc_ssm_params = {
     server_url    = "/platz/oidc/server-url"
