@@ -14,7 +14,7 @@ For example (see more below on `chart_discovery` and `k8s_agents`):
 
 ```
 module "platz" {
-  source = "github.com/platzio/terraform-aws-platzio?ref=v0.4.6-1/modules/main"
+  source = "github.com/platzio/terraform-aws-platzio?ref=v0.4.7/modules/main"
 
   k8s_cluster_name = "EKS CLUSTER NAME"
   ingress = {
@@ -51,7 +51,7 @@ This module can get the following variables:
 | `create_namespace`  |          | `true`          | Whether to create the namespace passed in the k8s_namespace variable                                                                                                                                                                                                                                                                                                                                                                                                              |
 | `helm_release_name` |          | `"platz"`       | The name of the Helm release                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | `chart_version`     |          | Current version | Helm chart version to install/upgrade                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| `ingress`            | Yes      |                 | Ingress for external access                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| `ingress`           | Yes      |                 | Ingress for external access                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | `oidc_ssm_params`   | Yes      |                 | Mapping containing SSM parameter names for configuring OIDC authentication: `server_url`, `client_id` and `client_secret`                                                                                                                                                                                                                                                                                                                                                         |
 | `api_enable_v1`     |          | `false`         | Whether to enable the obsolete `/api/v1` backend paths                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | `admin_emails`      |          | `[]`            | Email addresses to add as admins instead of regular users. This option is useful for allowing the first admins to log into Platz on a fresh deployment. Note that admins are added only after successful validation against the OIDC server, and if a user doesn't exist with that email. This means that if an admin is later changed to a regular user role, they will never become an admin again unless their user is deleted from the database, or removed from this option. |
@@ -70,7 +70,7 @@ For example:
 
 ```
 module "platz_chart_discovery" {
-  source = "github.com/platzio/terraform-aws-platzio?ref=v0.4.6-1/modules/chart-discovery"
+  source = "github.com/platzio/terraform-aws-platzio?ref=v0.4.7/modules/chart-discovery"
 
   irsa_oidc_provider = (OIDC Provider)
   irsa_oidc_arn      = (OIDC ARN)
@@ -91,7 +91,7 @@ Example:
 
 ```
 module "platz_k8s_agent_role" {
-  source = "github.com/platzio/terraform-aws-platzio?ref=v0.4.6-1/modules/k8s-agent-role"
+  source = "github.com/platzio/terraform-aws-platzio?ref=v0.4.7/modules/k8s-agent-role"
 
   k8s_agent_name     = "default"
   irsa_oidc_provider = (OIDC Provider)
@@ -125,7 +125,7 @@ resource "aws_iam_openid_connect_provider" "platz_cluster" {
 }
 
 module "platz_k8s_agent_role" {
-  source = "github.com/platzio/terraform-aws-platzio?ref=v0.4.6-1/modules/k8s-agent-role"
+  source = "github.com/platzio/terraform-aws-platzio?ref=v0.4.7/modules/k8s-agent-role"
 
   k8s_agent_name     = "prod"
   irsa_oidc_provider = replace(aws_iam_openid_connect_provider.platz_cluster.url, "https://", "")
