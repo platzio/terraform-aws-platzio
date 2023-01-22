@@ -28,5 +28,5 @@ variable "irsa_oidc_arn" {
 variable "enable_sse" {
   description = "Whether to enable server side encryption for SQS queue"
   type        = bool
-  default     = false
+  default     = true
 }
