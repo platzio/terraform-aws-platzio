@@ -2,6 +2,7 @@ resource "aws_sqs_queue" "this" {
   name                      = "${var.name_prefix}-chart-discovery"
   message_retention_seconds = 1209600
   receive_wait_time_seconds = 20
+  sqs_managed_sse_enabled   = var.enable_sse
 }
 
 data "aws_iam_policy_document" "queue_policy" {
