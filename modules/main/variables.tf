@@ -109,3 +109,12 @@ variable "chart" {
   type        = string
   default     = "platzio"
 }
+
+variable "node_selector" {
+  description = "Node selector"
+  type = object({
+    key   = string
+    value = string
+  })
+  default = null
+}

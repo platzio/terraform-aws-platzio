@@ -55,6 +55,11 @@ k8sAgents:
 %{ endfor ~}
 %{ endif ~}
 
+%{ if node_selector != null ~}
+nodeSelector:
+  ${node_selector.key}: "${node_selector.value}"
+%{ endif ~}
+
 postgresql:
   enabled: ${use_chart_db}
   databaseUrlOverride: ${db_url_override}

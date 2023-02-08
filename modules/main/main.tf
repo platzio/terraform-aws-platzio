@@ -24,6 +24,7 @@ resource "helm_release" "this" {
     admin_emails    = var.admin_emails
     chart_discovery = var.chart_discovery
     k8s_agents      = var.k8s_agents
+    node_selector   = var.node_selector
     use_chart_db    = var.use_chart_db
     db_url_override = var.db_url_override
   })]

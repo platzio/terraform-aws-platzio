@@ -39,6 +39,11 @@ module "platz" {
   k8s_agents = [
     module.platz_k8s_agent_role,
   ]
+
+  node_selector = {
+    key   = "example.com/key"
+    value = "value"
+  }
 }
 ```
 
@@ -59,6 +64,7 @@ This module can get the following variables:
 | `db_url_override`   |          |                 | Provide an override URL for the database (ignored unless `use_chart_db` is `false`)                                                                                                                                                                                                                                                                                                                                                                                               |
 | `chart_discovery`   |          |                 | Contains the IAM role for discovering charts in ECR repos, as created by the chart discovery module described below. The outputs of the chart discovery module match the inputs required by this module, so you can pass the module object directly into this module.                                                                                                                                                                                                             |
 | `k8s_agents`        |          |                 | An array of outputs from the K8s agent role modules described below. It works similarly to `chart_discovery`, just pass the module outputs as array elements into this module.                                                                                                                                                                                                                                                                                                    |
+| `node_selector`     |          | `null`          | Specify `key` and `value` to be added to the chart's `nodeSelector`.                                                                                                                                                                                                                                                                                                                                                                                                              |
 
 ## Chart Discovery Module
 
