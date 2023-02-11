@@ -60,6 +60,17 @@ nodeSelector:
   ${node_selector.key}: "${node_selector.value}"
 %{ endif ~}
 
+%{ if backup != null ~}
+backupJob:
+  config:
+    bucketName: ${backup.bucket_name}
+    bucketRegion: ${backup.bucket_region}
+    bucketPrefix: ${backup.bucket_prefix}
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: ${backup.iam_role_arn}
+%{ endif ~}
+
 postgresql:
   enabled: ${use_chart_db}
   databaseUrlOverride: ${db_url_override}

@@ -14,7 +14,7 @@ For example (see more below on `chart_discovery` and `k8s_agents`):
 
 ```terraform
 module "platz" {
-  source = "github.com/platzio/terraform-aws-platzio?ref=v0.4.9-beta.5/modules/main"
+  source = "github.com/platzio/terraform-aws-platzio?ref=v0.4.9-beta.8/modules/main"
 
   k8s_cluster_name = "EKS CLUSTER NAME"
   ingress = {
@@ -44,6 +44,8 @@ module "platz" {
     key   = "example.com/key"
     value = "value"
   }
+
+  backup = module.platz_backup
 }
 ```
 
@@ -65,6 +67,7 @@ This module can get the following variables:
 | `chart_discovery`   |          |                 | Contains the IAM role for discovering charts in ECR repos, as created by the chart discovery module described below. The outputs of the chart discovery module match the inputs required by this module, so you can pass the module object directly into this module.                                                                                                                                                                                                             |
 | `k8s_agents`        |          |                 | An array of outputs from the K8s agent role modules described below. It works similarly to `chart_discovery`, just pass the module outputs as array elements into this module.                                                                                                                                                                                                                                                                                                    |
 | `node_selector`     |          | `null`          | Specify `key` and `value` to be added to the chart's `nodeSelector`.                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `backup`            |          | `null`          | When provided, an hourly cronjob is created that backs up the entire database to the specified bucket. This variable expects the outputs of the `backup` module, if customizations are needed you can create the resources yourself and manually create the variable properties.                                                                                                                                                                                                  |
 
 ## Chart Discovery Module
 
@@ -76,7 +79,7 @@ For example:
 
 ```terraform
 module "platz_chart_discovery" {
-  source = "github.com/platzio/terraform-aws-platzio?ref=v0.4.9-beta.5/modules/chart-discovery"
+  source = "github.com/platzio/terraform-aws-platzio?ref=v0.4.9-beta.8/modules/chart-discovery"
 
   irsa_oidc_provider = (OIDC Provider)
   irsa_oidc_arn      = (OIDC ARN)
@@ -97,7 +100,7 @@ Example:
 
 ```terraform
 module "platz_k8s_agent_role" {
-  source = "github.com/platzio/terraform-aws-platzio?ref=v0.4.9-beta.5/modules/k8s-agent-role"
+  source = "github.com/platzio/terraform-aws-platzio?ref=v0.4.9-beta.8/modules/k8s-agent-role"
 
   k8s_agent_name     = "default"
   irsa_oidc_provider = (OIDC Provider)
@@ -131,7 +134,7 @@ resource "aws_iam_openid_connect_provider" "platz_cluster" {
 }
 
 module "platz_k8s_agent_role" {
-  source = "github.com/platzio/terraform-aws-platzio?ref=v0.4.9-beta.5/modules/k8s-agent-role"
+  source = "github.com/platzio/terraform-aws-platzio?ref=v0.4.9-beta.8/modules/k8s-agent-role"
 
   k8s_agent_name     = "prod"
   irsa_oidc_provider = replace(aws_iam_openid_connect_provider.platz_cluster.url, "https://", "")

@@ -29,7 +29,7 @@ variable "helm_release_name" {
 variable "chart_version" {
   description = "Helm chart version to install/upgrade"
   type        = string
-  default     = "0.4.9-beta.5"
+  default     = "0.4.9-beta.8"
 }
 
 variable "ingress" {
@@ -115,6 +115,17 @@ variable "node_selector" {
   type = object({
     key   = string
     value = string
+  })
+  default = null
+}
+
+variable "backup" {
+  description = "Details for database backup, enables an hourly cronjob for backing up the database"
+  type = object({
+    bucket_name   = string
+    bucket_region = string
+    bucket_prefix = string
+    iam_role_arn  = string
   })
   default = null
 }
