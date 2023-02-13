@@ -67,7 +67,7 @@ This module can get the following variables:
 | `chart_discovery`   |          |                 | Contains the IAM role for discovering charts in ECR repos, as created by the chart discovery module described below. The outputs of the chart discovery module match the inputs required by this module, so you can pass the module object directly into this module.                                                                                                                                                                                                             |
 | `k8s_agents`        |          |                 | An array of outputs from the K8s agent role modules described below. It works similarly to `chart_discovery`, just pass the module outputs as array elements into this module.                                                                                                                                                                                                                                                                                                    |
 | `node_selector`     |          | `null`          | Specify `key` and `value` to be added to the chart's `nodeSelector`.                                                                                                                                                                                                                                                                                                                                                                                                              |
-| `backup`            |          | `null`          | When provided, an hourly cronjob is created that backs up the entire database to the specified bucket. This variable expects the outputs of the `backup` module, if customizations are needed you can create the resources yourself and manually create the variable properties.                                                                                                                                                                                                  |
+| `backup`            |          | `null`          | When provided, an hourly cronjob is created that backs up the entire database to the specified bucket. This variable expects the outputs of the `backup` module, if customizations are needed you can create the resources yourself and manually create the variable properties. It also required a secret to exist with backup encryption key, see below.                                                                                                                        |
 
 ## Chart Discovery Module
 
@@ -165,3 +165,13 @@ module "platz_k8s_agent_role" {
    4. In "Authorized redirect URIs" click "Add URI" and fill-in the same URI with the path `/auth/google/callback`. For example, if the JavaScript origin is `https://example.com` add a redirect URI of `https://example.com/auth/google/callback`.
    5. Click "Create"
 7. Use the client ID and secret to create the SSM parameters above.
+
+## Backup Job Encryption Key
+
+The backup job encrypts the backups using `mcrypt` with an encryption key that has to exist in a secret.
+
+At the moment the secret has to be created manually like so:
+
+```bash
+kubectl -n platz create secret generic backup-config --from-literal="encryptionKey=`pwgen -s1``pwgen -s1``pwgen -s1``pwgen -s1`"
+```
