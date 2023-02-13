@@ -62,6 +62,7 @@ nodeSelector:
 
 %{ if backup != null ~}
 backupJob:
+  enabled: true
   config:
     bucketName: ${backup.bucket_name}
     bucketRegion: ${backup.bucket_region}
