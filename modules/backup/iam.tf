@@ -26,13 +26,17 @@ resource "aws_iam_policy" "this" {
   policy = data.aws_iam_policy_document.role_policy.json
 }
 
+locals {
+  bucket_path = var.bucket_prefix == "" ? "*" : "${var.bucket_prefix}/*"
+}
+
 data "aws_iam_policy_document" "role_policy" {
   statement {
     actions = [
       "s3:PutObject",
     ]
     resources = [
-      "${aws_s3_bucket.this.arn}/${var.bucket_prefix}/*",
+      "${aws_s3_bucket.this.arn}/${local.bucket_path}",
     ]
   }
 }
