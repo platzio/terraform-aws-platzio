@@ -29,7 +29,7 @@ variable "helm_release_name" {
 variable "chart_version" {
   description = "Helm chart version to install/upgrade"
   type        = string
-  default     = "0.5.0-beta.2"
+  default     = "0.5.0-beta.3"
 }
 
 variable "ingress" {
