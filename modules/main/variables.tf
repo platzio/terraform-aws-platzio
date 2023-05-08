@@ -81,13 +81,14 @@ variable "db_url_override" {
 }
 
 variable "chart_discovery" {
-  description = "SQS queue and IAM role for discovering charts in ECR. This variable should use the outputs of the chart-discovery terraform module"
-  default     = null
-  type = object({
+  description = "A list of SQS queues and IAM roles for discovering charts in ECR. This variable should use the outputs of the chart-discovery terraform modules"
+  default     = []
+  type = list(object({
+    name         = string
     iam_role_arn = string
     queue_name   = string
     queue_region = string
-  })
+  }))
 }
 
 variable "k8s_agents" {

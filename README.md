@@ -34,7 +34,9 @@ module "platz" {
     client_secret = "/platz/oidc/client-secret"
   }
 
-  chart_discovery = module.platz_chart_discovery
+  chart_discovery = [
+    module.platz_chart_discovery,
+  ]
 
   k8s_agents = [
     module.platz_k8s_agent_role,
@@ -88,6 +90,38 @@ module "platz_chart_discovery" {
 
 The OIDC provider and ARN are required for allowing Platz to assume into the role
 created by this module. These inputs are usually created along with the EKS cluster.
+
+When using multiple regions or AWS accounts, several instances of this module can be passed to the main module. In this case you must specify different `instance_name` attributes to each module:
+
+```terraform
+module "platz_chart_discovery_1" {
+  source = "github.com/platzio/terraform-aws-platzio?ref=v0.5.0-beta.3/modules/chart-discovery"
+
+  instance_name = "one"
+
+  irsa_oidc_provider = (OIDC Provider)
+  irsa_oidc_arn      = (OIDC ARN)
+}
+
+module "platz_chart_discovery_2" {
+  source = "github.com/platzio/terraform-aws-platzio?ref=v0.5.0-beta.3/modules/chart-discovery"
+
+  instance_name = "two"
+
+  irsa_oidc_provider = (OIDC Provider)
+  irsa_oidc_arn      = (OIDC ARN)
+}
+
+module "platz" {
+  # ...
+
+  chart_discovery = [
+    module.platz_chart_discovery_1,
+    module.platz_chart_discovery_2,
+  ]
+}
+
+```
 
 ## K8s Agent Role Module
 

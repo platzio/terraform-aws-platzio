@@ -1,3 +1,8 @@
+output "name" {
+  description = "chart-discovery name, as passed to this module"
+  value       = var.instance_name
+}
+
 output "iam_role_arn" {
   description = "IAM role ARN to use with chart-discovery worker"
   value       = aws_iam_role.this.arn

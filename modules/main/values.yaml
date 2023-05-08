@@ -35,23 +35,28 @@ api:
 %{ endif ~}
     - v2
 
-%{ if chart_discovery != null ~}
+%{ if chart_discovery != []] ~}
 chartDiscovery:
-  ecr:
-    queueName: ${chart_discovery.queue_name}
-    regionName: ${chart_discovery.queue_region}
-  serviceAccount:
-    annotations:
-      eks.amazonaws.com/role-arn: ${chart_discovery.iam_role_arn}
+  instances:
+%{ for instance in chart_discovery ~}
+    - name: ${instance.name}
+      ecrEvents:
+        queueName: ${instance.queue_name}
+        regionName: ${instance.queue_region}
+      serviceAccount:
+        annotations:
+          eks.amazonaws.com/role-arn: ${instance.iam_role_arn}
+%{ endfor ~}
 %{ endif ~}
 
 %{ if k8s_agents != [] ~}
-k8sAgents:
+k8sAgent:
 %{ for k8s_agent in k8s_agents ~}
-  - name: ${k8s_agent.name}
-    serviceAccount:
-      annotations:
-        eks.amazonaws.com/role-arn: ${k8s_agent.iam_role_arn}
+  instances:
+    - name: ${k8s_agent.name}
+      serviceAccount:
+        annotations:
+          eks.amazonaws.com/role-arn: ${k8s_agent.iam_role_arn}
 %{ endfor ~}
 %{ endif ~}
 

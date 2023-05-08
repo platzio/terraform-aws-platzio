@@ -15,6 +15,12 @@ variable "helm_release_name" {
   default     = "platz"
 }
 
+variable "instance_name" {
+  description = "Name of chart-discovery instance, has to be unique among all other chart-discovery names"
+  type        = string
+  default     = "default"
+}
+
 variable "irsa_oidc_provider" {
   description = "IRSA OIDC provider address, to be used in assume role documents"
   type        = string
