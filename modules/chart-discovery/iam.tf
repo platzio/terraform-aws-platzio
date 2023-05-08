@@ -1,5 +1,5 @@
 resource "aws_iam_role" "this" {
-  name               = "${var.name_prefix}-chart-discovery"
+  name               = "${var.name_prefix}-chart-discovery-${var.instance_name}"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
@@ -11,7 +11,7 @@ data "aws_iam_policy_document" "assume_role" {
     condition {
       test     = "StringEquals"
       variable = "${var.irsa_oidc_provider}:sub"
-      values   = ["system:serviceaccount:${var.k8s_namespace}:${var.helm_release_name}-chart-discovery"]
+      values   = ["system:serviceaccount:${var.k8s_namespace}:${var.helm_release_name}-chart-discovery-${var.instance_name}"]
     }
 
     principals {

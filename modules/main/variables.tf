@@ -29,7 +29,7 @@ variable "helm_release_name" {
 variable "chart_version" {
   description = "Helm chart version to install/upgrade"
   type        = string
-  default     = "0.5.0-beta.3"
+  default     = "0.5.0-beta.5"
 }
 
 variable "ingress" {
@@ -84,10 +84,11 @@ variable "chart_discovery" {
   description = "A list of SQS queues and IAM roles for discovering charts in ECR. This variable should use the outputs of the chart-discovery terraform modules"
   default     = []
   type = list(object({
-    instance_name = string
-    iam_role_arn  = string
-    queue_name    = string
-    queue_region  = string
+    instance_name     = string
+    enable_tag_parser = bool
+    iam_role_arn      = string
+    queue_name        = string
+    queue_region      = string
   }))
 }
 

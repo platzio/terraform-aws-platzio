@@ -17,3 +17,8 @@ output "queue_region" {
   description = "AWS region of the SQS queue"
   value       = data.aws_region.current.name
 }
+
+output "enable_tag_parser" {
+  description = "The enable_tag_parser variable as passed to this module"
+  value       = var.enable_tag_parser
+}

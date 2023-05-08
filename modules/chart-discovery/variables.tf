@@ -36,3 +36,9 @@ variable "enable_sse" {
   type        = bool
   default     = true
 }
+
+variable "enable_tag_parser" {
+  description = "Should tag parsing be enabled on this chart-discovery instance. Tag parsing happens during worker startup and should only be enabled in one instance. Disable this if you have switched to chart annotations."
+  type        = bool
+  default     = false
+}

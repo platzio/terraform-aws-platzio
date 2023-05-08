@@ -40,6 +40,7 @@ chartDiscovery:
   instances:
 %{ for instance in chart_discovery ~}
     - name: ${instance.instance_name}
+      enableTagParser: ${instance.enable_tag_parser}
       ecrEvents:
         queueName: ${instance.queue_name}
         regionName: ${instance.queue_region}
