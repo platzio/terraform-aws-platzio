@@ -52,8 +52,8 @@ chartDiscovery:
 
 %{ if k8s_agents != [] ~}
 k8sAgent:
-%{ for k8s_agent in k8s_agents ~}
   instances:
+%{ for k8s_agent in k8s_agents ~}
     - name: ${k8s_agent.instance_name}
       serviceAccount:
         annotations:
