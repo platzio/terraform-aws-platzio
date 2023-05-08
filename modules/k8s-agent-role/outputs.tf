@@ -1,6 +1,6 @@
-output "name" {
-  description = "k8s-agent name, as passed to this module"
-  value       = var.k8s_agent_name
+output "instance_name" {
+  description = "instance_name as passed to this module"
+  value       = var.instance_name
 }
 
 output "iam_role_arn" {

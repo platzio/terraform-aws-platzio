@@ -84,18 +84,18 @@ variable "chart_discovery" {
   description = "A list of SQS queues and IAM roles for discovering charts in ECR. This variable should use the outputs of the chart-discovery terraform modules"
   default     = []
   type = list(object({
-    name         = string
-    iam_role_arn = string
-    queue_name   = string
-    queue_region = string
+    instance_name = string
+    iam_role_arn  = string
+    queue_name    = string
+    queue_region  = string
   }))
 }
 
 variable "k8s_agents" {
   description = "A list of IAM roles, once for each k8s-agent to run. Each list item of this variable should use the outputs of the k8s-agent-role terraform module"
   type = list(object({
-    name         = string
-    iam_role_arn = string
+    instance_name = string
+    iam_role_arn  = string
   }))
 }
 

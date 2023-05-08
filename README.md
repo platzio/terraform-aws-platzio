@@ -134,9 +134,9 @@ Example:
 
 ```terraform
 module "platz_k8s_agent_role" {
-  source = "github.com/platzio/terraform-aws-platzio?ref=v0.5.0-beta.3/modules/k8s-agent-role"
+  source = "github.com/platzio/terraform-aws-platzio?ref=v0.5.0-beta.4/modules/k8s-agent-role"
 
-  k8s_agent_name     = "default"
+  instance_name      = "default"
   irsa_oidc_provider = (OIDC Provider)
   irsa_oidc_arn      = (OIDC ARN)
 }
@@ -145,7 +145,7 @@ module "platz_k8s_agent_role" {
 ## Multiple AWS Accounts
 
 If you have more than one AWS account, make sure to choose different names for
-`k8s_agent_name` as this name is used for creating the statefulset in Kubernetes
+`instance_name` as this name is used for creating the statefulset in Kubernetes
 later on.
 
 When creating the k8s-agent-role module in each account, note that the IRSA provider
@@ -170,7 +170,7 @@ resource "aws_iam_openid_connect_provider" "platz_cluster" {
 module "platz_k8s_agent_role" {
   source = "github.com/platzio/terraform-aws-platzio?ref=v0.5.0-beta.3/modules/k8s-agent-role"
 
-  k8s_agent_name     = "prod"
+  instance_name      = "prod"
   irsa_oidc_provider = replace(aws_iam_openid_connect_provider.platz_cluster.url, "https://", "")
   irsa_oidc_arn      = aws_iam_openid_connect_provider.platz_cluster.arn
 }

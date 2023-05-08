@@ -1,5 +1,5 @@
-output "name" {
-  description = "chart-discovery name, as passed to this module"
+output "instance_name" {
+  description = "instance_name as passed to this module"
   value       = var.instance_name
 }
 

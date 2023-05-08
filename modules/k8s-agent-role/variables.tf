@@ -15,7 +15,7 @@ variable "helm_release_name" {
   default     = "platz"
 }
 
-variable "k8s_agent_name" {
+variable "instance_name" {
   description = "Name of k8s-agent, has to be unique among all other k8s-agent names"
   type        = string
 }

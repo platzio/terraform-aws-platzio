@@ -1,5 +1,5 @@
 resource "aws_iam_role" "this" {
-  name               = "${var.name_prefix}-k8s-agent-${var.k8s_agent_name}"
+  name               = "${var.name_prefix}-k8s-agent-${var.instance_name}"
   assume_role_policy = data.aws_iam_policy_document.this_assume_role.json
 }
 
@@ -11,7 +11,7 @@ data "aws_iam_policy_document" "this_assume_role" {
     condition {
       test     = "StringEquals"
       variable = "${var.irsa_oidc_provider}:sub"
-      values   = ["system:serviceaccount:${var.k8s_namespace}:${var.helm_release_name}-k8s-agent-${var.k8s_agent_name}"]
+      values   = ["system:serviceaccount:${var.k8s_namespace}:${var.helm_release_name}-k8s-agent-${var.instance_name}"]
     }
 
     principals {
