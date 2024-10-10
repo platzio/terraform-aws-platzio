@@ -28,13 +28,6 @@ auth:
 %{ endfor ~}
 %{ endif ~}
 
-api:
-  enabledVersions:
-%{ if api_enable_v1 ~}
-    - v1
-%{ endif ~}
-    - v2
-
 %{ if chart_discovery != [] ~}
 chartDiscovery:
   instances:
