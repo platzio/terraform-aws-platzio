@@ -14,7 +14,7 @@ For example (see more below on `chart_discovery` and `k8s_agents`):
 
 ```terraform
 module "platz" {
-  source = "github.com/platzio/terraform-aws-platzio?ref=v0.6.0-beta.5/modules/main"
+  source = "github.com/platzio/terraform-aws-platzio?ref=v0.6.0-beta.6/modules/main"
 
   k8s_cluster_name = "EKS CLUSTER NAME"
   ingress = {
@@ -80,7 +80,7 @@ For example:
 
 ```terraform
 module "platz_chart_discovery" {
-  source = "github.com/platzio/terraform-aws-platzio?ref=v0.6.0-beta.5/modules/chart-discovery"
+  source = "github.com/platzio/terraform-aws-platzio?ref=v0.6.0-beta.6/modules/chart-discovery"
 
   irsa_oidc_provider = (OIDC Provider)
   irsa_oidc_arn      = (OIDC ARN)
@@ -94,7 +94,7 @@ When using multiple regions or AWS accounts, several instances of this module ca
 
 ```terraform
 module "platz_chart_discovery_1" {
-  source = "github.com/platzio/terraform-aws-platzio?ref=v0.6.0-beta.5/modules/chart-discovery"
+  source = "github.com/platzio/terraform-aws-platzio?ref=v0.6.0-beta.6/modules/chart-discovery"
 
   instance_name = "one"
 
@@ -103,7 +103,7 @@ module "platz_chart_discovery_1" {
 }
 
 module "platz_chart_discovery_2" {
-  source = "github.com/platzio/terraform-aws-platzio?ref=v0.6.0-beta.5/modules/chart-discovery"
+  source = "github.com/platzio/terraform-aws-platzio?ref=v0.6.0-beta.6/modules/chart-discovery"
 
   instance_name = "two"
 
@@ -133,7 +133,7 @@ Example:
 
 ```terraform
 module "platz_k8s_agent_role" {
-  source = "github.com/platzio/terraform-aws-platzio?ref=v0.6.0-beta.5/modules/k8s-agent-role"
+  source = "github.com/platzio/terraform-aws-platzio?ref=v0.6.0-beta.6/modules/k8s-agent-role"
 
   instance_name      = "default"
   irsa_oidc_provider = (OIDC Provider)
@@ -167,7 +167,7 @@ resource "aws_iam_openid_connect_provider" "platz_cluster" {
 }
 
 module "platz_k8s_agent_role" {
-  source = "github.com/platzio/terraform-aws-platzio?ref=v0.6.0-beta.5/modules/k8s-agent-role"
+  source = "github.com/platzio/terraform-aws-platzio?ref=v0.6.0-beta.6/modules/k8s-agent-role"
 
   instance_name      = "prod"
   irsa_oidc_provider = replace(aws_iam_openid_connect_provider.platz_cluster.url, "https://", "")
