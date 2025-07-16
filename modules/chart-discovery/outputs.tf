@@ -15,7 +15,7 @@ output "queue_name" {
 
 output "queue_region" {
   description = "AWS region of the SQS queue"
-  value       = data.aws_region.current.name
+  value       = data.aws_region.current.region
 }
 
 output "enable_tag_parser" {
