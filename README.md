@@ -14,7 +14,7 @@ For example (see more below on `chart_discovery` and `k8s_agents`):
 
 ```terraform
 module "platz" {
-  source = "github.com/platzio/terraform-aws-platzio?ref=v0.6.2/modules/main"
+  source = "github.com/platzio/terraform-aws-platzio?ref=v0.6.5/modules/main"
 
   k8s_cluster_name = "EKS CLUSTER NAME"
   ingress = {
@@ -63,8 +63,8 @@ This module can get the following variables:
 | `ingress`           | Yes      |                 | Ingress for external access                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | `oidc_ssm_params`   | Yes      |                 | Mapping containing SSM parameter names for configuring OIDC authentication: `server_url`, `client_id` and `client_secret`                                                                                                                                                                                                                                                                                                                                                         |
 | `admin_emails`      |          | `[]`            | Email addresses to add as admins instead of regular users. This option is useful for allowing the first admins to log into Platz on a fresh deployment. Note that admins are added only after successful validation against the OIDC server, and if a user doesn't exist with that email. This means that if an admin is later changed to a regular user role, they will never become an admin again unless their user is deleted from the database, or removed from this option. |
-| `use_chart_db`      |          | `true`          | Install the `postgresql` sub-chart (if `false`, you must pass `db_url_override`)                                                                                                                                                                                                                                                                                                                                                                                                  |
-| `db_url_override`   |          |                 | Provide an override URL for the database (ignored unless `use_chart_db` is `false`)                                                                                                                                                                                                                                                                                                                                                                                               |
+| `install_database`  |          | `true`          | Install a `postgresql` database chart by [groundhog2k/postgres](https://artifacthub.io/packages/helm/groundhog2k/postgres) (if `false`, you must provide `database_config`)                                                                                                                                                                                                                                                                                                       |
+| `database_config`   |          |                 | Database connection parameters (ignored unless `install_database` is `false`)                                                                                                                                                                                                                                                                                                                                                                                                     |
 | `chart_discovery`   |          |                 | Contains the IAM role for discovering charts in ECR repos, as created by the chart discovery module described below. The outputs of the chart discovery module match the inputs required by this module, so you can pass the module object directly into this module.                                                                                                                                                                                                             |
 | `k8s_agents`        |          |                 | An array of outputs from the K8s agent role modules described below. It works similarly to `chart_discovery`, just pass the module outputs as array elements into this module.                                                                                                                                                                                                                                                                                                    |
 | `node_selector`     |          | `null`          | Specify `key` and `value` to be added to the chart's `nodeSelector`.                                                                                                                                                                                                                                                                                                                                                                                                              |
@@ -80,7 +80,7 @@ For example:
 
 ```terraform
 module "platz_chart_discovery" {
-  source = "github.com/platzio/terraform-aws-platzio?ref=v0.6.2/modules/chart-discovery"
+  source = "github.com/platzio/terraform-aws-platzio?ref=v0.6.5/modules/chart-discovery"
 
   irsa_oidc_provider = (OIDC Provider)
   irsa_oidc_arn      = (OIDC ARN)
@@ -94,7 +94,7 @@ When using multiple regions or AWS accounts, several instances of this module ca
 
 ```terraform
 module "platz_chart_discovery_1" {
-  source = "github.com/platzio/terraform-aws-platzio?ref=v0.6.2/modules/chart-discovery"
+  source = "github.com/platzio/terraform-aws-platzio?ref=v0.6.5/modules/chart-discovery"
 
   instance_name = "one"
 
@@ -103,7 +103,7 @@ module "platz_chart_discovery_1" {
 }
 
 module "platz_chart_discovery_2" {
-  source = "github.com/platzio/terraform-aws-platzio?ref=v0.6.2/modules/chart-discovery"
+  source = "github.com/platzio/terraform-aws-platzio?ref=v0.6.5/modules/chart-discovery"
 
   instance_name = "two"
 
@@ -133,7 +133,7 @@ Example:
 
 ```terraform
 module "platz_k8s_agent_role" {
-  source = "github.com/platzio/terraform-aws-platzio?ref=v0.6.2/modules/k8s-agent-role"
+  source = "github.com/platzio/terraform-aws-platzio?ref=v0.6.5/modules/k8s-agent-role"
 
   instance_name      = "default"
   irsa_oidc_provider = (OIDC Provider)
@@ -167,7 +167,7 @@ resource "aws_iam_openid_connect_provider" "platz_cluster" {
 }
 
 module "platz_k8s_agent_role" {
-  source = "github.com/platzio/terraform-aws-platzio?ref=v0.6.2/modules/k8s-agent-role"
+  source = "github.com/platzio/terraform-aws-platzio?ref=v0.6.5/modules/k8s-agent-role"
 
   instance_name      = "prod"
   irsa_oidc_provider = replace(aws_iam_openid_connect_provider.platz_cluster.url, "https://", "")

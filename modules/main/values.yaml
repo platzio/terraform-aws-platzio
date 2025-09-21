@@ -70,7 +70,3 @@ backupJob:
     annotations:
       eks.amazonaws.com/role-arn: ${backup.iam_role_arn}
 %{ endif ~}
-
-postgresql:
-  enabled: ${use_chart_db}
-  databaseUrlOverride: ${db_url_override}

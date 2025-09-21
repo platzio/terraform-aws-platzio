@@ -49,3 +49,28 @@ data "aws_iam_policy_document" "bucket_policy" {
     ]
   }
 }
+
+resource "aws_s3_bucket_lifecycle_configuration" "this" {
+  bucket                                 = aws_s3_bucket.this.bucket
+  transition_default_minimum_object_size = "varies_by_storage_class"
+
+  rule {
+    id     = "expiration"
+    status = "Enabled"
+
+    expiration {
+      days = 90
+    }
+  }
+
+  rule {
+    id     = "noncurrent_version_expiration"
+    status = "Enabled"
+
+    filter {}
+
+    noncurrent_version_expiration {
+      noncurrent_days = 90
+    }
+  }
+}

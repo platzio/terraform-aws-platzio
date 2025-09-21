@@ -9,10 +9,22 @@ variable "k8s_namespace" {
   default     = "platz"
 }
 
-variable "create_namespace" {
-  description = "Whether to create the namespace passed in the k8s_namespace variable"
+variable "install_database" {
+  description = "Whether to install a database chart"
   type        = bool
   default     = true
+}
+
+variable "database_config" {
+  description = "Database connection parameters, if not using var.install_database"
+  type = object({
+    host     = string
+    port     = string
+    user     = string
+    password = string
+    database = string
+  })
+  default = null
 }
 
 variable "depends_on_value" {
@@ -29,7 +41,7 @@ variable "helm_release_name" {
 variable "chart_version" {
   description = "Helm chart version to install/upgrade"
   type        = string
-  default     = "0.6.2"
+  default     = "0.6.5"
 }
 
 variable "ingress" {
@@ -60,12 +72,6 @@ variable "admin_emails" {
   description = "Email addresses to add as admins instead of regular users. This option is useful for allowing the first admins to log into Platz on a fresh deployment. Note that admins are added only after successful validation against the OIDC server, and if a user doesn't exist with that email. This means that if an admin is later changed to a regular user role, they will never become an admin again unless their user is deleted from the database, or removed from this option."
   type        = list(string)
   default     = []
-}
-
-variable "use_chart_db" {
-  description = "Use the postgresql sub-chart for deploying a database"
-  type        = bool
-  default     = true
 }
 
 variable "db_url_override" {
