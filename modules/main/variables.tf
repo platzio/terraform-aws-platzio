@@ -41,7 +41,19 @@ variable "helm_release_name" {
 variable "chart_version" {
   description = "Helm chart version to install/upgrade"
   type        = string
-  default     = "0.6.8"
+  default     = "0.7.0-beta.1"
+}
+
+variable "database_pool" {
+  description = "Tuning for the database connection pool shared by all Platz pods. Each field maps to a DB_POOL_* env var; leave fields null to fall back to the built-in defaults (max_size=50, connection_timeout_secs=30, idle_timeout_secs=600, max_lifetime_secs=1800)."
+  type = object({
+    max_size                = optional(number)
+    min_idle                = optional(number)
+    connection_timeout_secs = optional(number)
+    idle_timeout_secs       = optional(number)
+    max_lifetime_secs       = optional(number)
+  })
+  default = {}
 }
 
 variable "ingress" {

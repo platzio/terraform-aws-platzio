@@ -24,5 +24,6 @@ resource "helm_release" "this" {
     k8s_agents      = var.k8s_agents
     node_selector   = var.node_selector
     backup          = var.backup
+    database_pool   = var.database_pool
   })]
 }

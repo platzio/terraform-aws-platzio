@@ -70,3 +70,23 @@ backupJob:
     annotations:
       eks.amazonaws.com/role-arn: ${backup.iam_role_arn}
 %{ endif ~}
+
+%{ if database_pool.max_size != null || database_pool.min_idle != null || database_pool.connection_timeout_secs != null || database_pool.idle_timeout_secs != null || database_pool.max_lifetime_secs != null ~}
+database:
+  pool:
+%{ if database_pool.max_size != null ~}
+    maxSize: "${database_pool.max_size}"
+%{ endif ~}
+%{ if database_pool.min_idle != null ~}
+    minIdle: "${database_pool.min_idle}"
+%{ endif ~}
+%{ if database_pool.connection_timeout_secs != null ~}
+    connectionTimeoutSecs: "${database_pool.connection_timeout_secs}"
+%{ endif ~}
+%{ if database_pool.idle_timeout_secs != null ~}
+    idleTimeoutSecs: "${database_pool.idle_timeout_secs}"
+%{ endif ~}
+%{ if database_pool.max_lifetime_secs != null ~}
+    maxLifetimeSecs: "${database_pool.max_lifetime_secs}"
+%{ endif ~}
+%{ endif ~}
