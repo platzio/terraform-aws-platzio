@@ -41,7 +41,7 @@ variable "helm_release_name" {
 variable "chart_version" {
   description = "Helm chart version to install/upgrade"
   type        = string
-  default     = "0.7.0-beta.4"
+  default     = "0.7.0-beta.5"
 }
 
 variable "database_pool" {
